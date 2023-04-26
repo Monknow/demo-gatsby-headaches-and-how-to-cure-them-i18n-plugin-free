@@ -1,14 +1,18 @@
 import * as React from "react";
-import {Link} from "gatsby";
+import {LocalizedLink as Link} from "../components/LocalizedLink";
+import {LocaleContext} from "../context/LocaleContext";
+import {useContext} from "react";
+import {translations} from "../../i18n/translations";
 
 const NotFoundPage = () => {
+	const locale = useContext(LocaleContext);
+
 	return (
 		<main>
-			<h1>Page not found</h1>
+			<h1>{translations[locale].not_found_page_title}</h1>
 			<p>
-				Sorry 😔, we couldn’t find what you were looking for
-				<br />
-				<Link to="/">Go Home</Link>.
+				{translations[locale].not_found_page_body} <br />
+				<Link to="/">{translations[locale].not_found_page_back_link}</Link>.
 			</p>
 		</main>
 	);
@@ -16,4 +20,8 @@ const NotFoundPage = () => {
 
 export default NotFoundPage;
 
-export const Head = () => <title>Not found</title>;
+export const Head = ({pageContext}) => {
+	const {locale} = pageContext;
+
+	return <title>{translations[locale].not_found_page_title}</title>;
+};
