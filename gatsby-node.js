@@ -1,22 +1,3 @@
-exports.createPages = async ({actions}) => {
-	const {createRedirect} = actions;
-
-	createRedirect({
-		fromPath: `/*`,
-		toPath: `/en/*`,
-		isPermanent: true,
-	});
-
-	createRedirect({
-		fromPath: `/*`,
-		toPath: `/es/*`,
-		isPermanent: true,
-		conditions: {
-			language: [`es`],
-		},
-	});
-};
-
 const locales = ["en", "es"];
 
 exports.onCreatePage = ({page, actions}) => {
@@ -36,5 +17,22 @@ exports.onCreatePage = ({page, actions}) => {
 			},
 			matchPath,
 		});
+	});
+
+	const {createRedirect} = actions;
+
+	createRedirect({
+		fromPath: page.path,
+		toPath: `/en${page.path}`,
+		isPermanent: true,
+	});
+
+	createRedirect({
+		fromPath: page.path,
+		toPath: `/es${page.path}`,
+		isPermanent: true,
+		conditions: {
+			language: [`es`],
+		},
 	});
 };
